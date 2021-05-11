@@ -138,14 +138,56 @@ def hit_or_stand(deck, hand):
             continue
         break
 
+
+def show_some(player, dealer):
+    print("\nDealer's Hand:")
+    print(" <card hidden>")
+    print('', dealer.cards[1])
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+
+
+def show_all(player, dealer):
+    print("\nDealer's Hand:", *dealer.cards, sep='\n ')
+    print("Dealer's Hand =", dealer.value)
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+    print("Player's Hand =", player.value)
+
+
+def player_busts(player, dealer, chips):
+    print("Player busts!")
+    chips.lose_bet()
+
+
+def player_wins(player, dealer, chips):
+    print("Player wins!")
+    chips.win_bet()
+
+
+def dealer_busts(player, dealer, chips):
+    print("Dealer busts!")
+    chips.win_bet()
+
+
+def dealer_wins(player, dealer, chips):
+    print("Dealer wins!")
+    chips.lose_bet()
+
+
+def push(player, dealer):
+    print("Dealer and Player tie! It's a push.")
+
+
 class TestCap(unittest.TestCase):
     def test_deck(self):
         test_deck = Deck()
         print(test_deck)
 
     def test_player(self):
-
+        test_deck = Deck()
         test_player = Hand()
+        test_player.add_card(test_deck.deal())
+        test_player.add_card(test_deck.deal())
+        test_player.value
         for card in test_player.cards:
             print(card)
 
@@ -159,76 +201,79 @@ class TestCap(unittest.TestCase):
 
 
 
-# GAME SETUP
 
 if __name__ == "__main__":
-    test_deck = Deck()
-    test_player = Hand()
-    test_player.add_card(test_deck.deal())
-    test_player.add_card(test_deck.deal())
-    test_player.value
-    for card in test_player.cards:
-        print(card)
+    # GAME SETUP
+    while True:
+        # Print an opening statement
+        print('Welcome to BlackJack! Get as close to 21 as you can without going over!\n\
+        Dealer hits until she reaches 17. Aces count as 1 or 11.')
 
+        # Create & shuffle the deck, deal two cards to each player
+        deck = Deck()
+        deck.shuffle()
 
-    # # Creating a new instance of the Deck class
-    # new_deck = Deck()
-    #
-    # player_one = Player("One")
-    # player_two = Player("One")
-    #
-    # player_one.add_cards(new_deck.deal)
-    # player_two.add_cards(new_deck.deal)
-    #
-    # game_on = True
-    #
-    # round_num = 0
-    #
-    # while game_on:
-    #     round_num += 1
-    #     print(f"Round {round_num}")
-    #     if len(player_one.all_cards) == 0:
-    #         print('Player One, out of cards! Player Two Wins!')
-    #         game_on = False
-    #         break
-    #     if len(player_two.all_cards) == 0:
-    #         print('Player One, out of cards! Player Two Wins!')
-    #         game_on = False
-    #         break
-    #     # START A NEW ROUND
-    #     player_one_cards = []
-    #     player_one_cards.append(player_one.remove_one())
-    #
-    #     player_two_cards = []
-    #     player_two_cards.append(player_two.remove_one())
-    #
-    #     at_war = True
-    #     while at_war:
-    #         if player_one_cards[-1].value > player_two_cards[-1].value:
-    #             player_one_cards.add_cards(player_one_cards)
-    #             player_one_cards.add_cards(player_two_cards)
-    #             at_war = False
-    #         elif player_one_cards[-1].value < player_two_cards[-1].value:
-    #             player_one_cards.add_cards(player_one_cards)
-    #             player_one_cards.add_cards(player_two_cards)
-    #             at_war = False
-    #         else:
-    #             print('WAR!!!')
-    #
-    #             if len(player_one.all_cards) < 3:
-    #                 print('Player One unable to declare war')
-    #                 print('PLAYER TWO WINS')
-    #                 game_on = False
-    #                 break
-    #
-    #             elif len(player_two.all_cards) < 3:
-    #                 print('Player Two unable to declare war')
-    #                 print('PLAYER ONE WINS')
-    #                 game_on = False
-    #                 break
-    #             else:
-    #                 for num in range(3):
-    #                     player_one_cards.append(player_one.remove_one())
-    #                     player_two_cards.append(player_two.remove_one())
+        player_hand = Hand()
+        player_hand.add_card(deck.deal())
+        player_hand.add_card(deck.deal())
 
+        dealer_hand = Hand()
+        dealer_hand.add_card(deck.deal())
+        dealer_hand.add_card(deck.deal())
 
+        # Set up the Player's chips
+        player_chips = Chips()  # remember the default value is 100
+
+        # Prompt the Player for their bet
+        take_bet(player_chips)
+
+        # Show cards (but keep one dealer card hidden)
+        show_some(player_hand, dealer_hand)
+
+        while playing:  # recall this variable from our hit_or_stand function
+
+            # Prompt for Player to Hit or Stand
+            hit_or_stand(deck, player_hand)
+
+            # Show cards (but keep one dealer card hidden)
+            show_some(player_hand, dealer_hand)
+
+            # If player's hand exceeds 21, run player_busts() and break out of loop
+            if player_hand.value > 21:
+                player_busts(player_hand, dealer_hand, player_chips)
+                break
+
+                # If Player hasn't busted, play Dealer's hand until Dealer reaches 17
+        if player_hand.value <= 21:
+
+            while dealer_hand.value < 17:
+                hit(deck, dealer_hand)
+
+                # Show all cards
+            show_all(player_hand, dealer_hand)
+
+            # Run different winning scenarios
+            if dealer_hand.value > 21:
+                dealer_busts(player_hand, dealer_hand, player_chips)
+
+            elif dealer_hand.value > player_hand.value:
+                dealer_wins(player_hand, dealer_hand, player_chips)
+
+            elif dealer_hand.value < player_hand.value:
+                player_wins(player_hand, dealer_hand, player_chips)
+
+            else:
+                push(player_hand, dealer_hand)
+
+                # Inform Player of their chips total
+        print("\nPlayer's winnings stand at", player_chips.total)
+
+        # Ask to play again
+        new_game = input("Would you like to play another hand? Enter 'y' or 'n' ")
+
+        if new_game[0].lower() == 'y':
+            playing = True
+            continue
+        else:
+            print("Thanks for playing!")
+            break
