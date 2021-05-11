@@ -1,6 +1,6 @@
 def genfibon(n):
     """
-    This program generates a fibonnaci sequence up to n
+    This program generates a fibonnaci sequence
     """
     a = 1
     b = 1
