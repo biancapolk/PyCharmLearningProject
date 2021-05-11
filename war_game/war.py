@@ -138,7 +138,6 @@ if __name__ == "__main__":
     # print(first_card)
 
 
-
     # try:
     #
     #     five_of_hearts = Card("Hearts", 'Five')
@@ -153,7 +152,7 @@ if __name__ == "__main__":
     # for card_object in new_deck.all_cards:
     #   print(card_object)
 
-    #
+
     new_deck.shuffle()
     mycard = new_deck.deal()
     print(mycard)
@@ -161,3 +160,4 @@ if __name__ == "__main__":
     new_player = Player("Jose")
     print(new_player)
     new_player.add_cards()
+    new_player()
