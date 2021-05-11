@@ -7,9 +7,9 @@ ranks = {'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
          'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace'}
 values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7,
           'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
+playing = True
 
-
-class Card:
+class Card():
     def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
@@ -22,6 +22,7 @@ class Card:
 class Deck:
     def __init__(self):
         # All 52 card objects
+        self.deck = []
         self.all_cards = []
 
         for suit in suits:
@@ -29,12 +30,18 @@ class Deck:
                 # Create the Card object
                 created_card = Card(suit, rank)
                 self.all_cards.append(created_card)
+    def __str__(self):
+        deck_comp = ''
+        for card in self.deck:
+            deck_comp += '\n' + card.__str__()
+        return "The deck has: " + deck_comp
 
     def shuffle(self):
         random.shuffle(self.all_cards)
 
-    def deal_one(self):
-        return self.all_cards.pop()
+    def deal(self):
+        single_card = self.deck.pop()
+        return single_card
 
 class Player:
     def __init__(self, name):
@@ -59,8 +66,15 @@ class Player:
 # GAME SETUP
 
 if __name__ == "__main__":
-    player_one.add_card(new_deck.deal_one())
-    player_two.add_card(new_deck.deal_one())
+
+    # Creating a new instance of the Deck class
+    new_deck = Deck()
+
+    player_one = Player("One")
+    player_two = Player("One")
+
+    player_one.add_cards(new_deck.deal())
+    player_two.add_cards(new_deck.deal())
 
     game_on = True
 
@@ -84,10 +98,37 @@ if __name__ == "__main__":
         player_two_cards = []
         player_two_cards.append(player_two.remove_one())
 
-        # while at_war
+        at_war = True
+        while at_war:
+            if player_one_cards[-1].value > player_two_cards[-1].value:
+                player_one_cards.add_cards(player_one_cards)
+                player_one_cards.add_cards(player_two_cards)
+                at_war = False
+            elif player_one_cards[-1].value < player_two_cards[-1].value:
+                player_one_cards.add_cards(player_one_cards)
+                player_one_cards.add_cards(player_two_cards)
+                at_war = False
+            else:
+                print('WAR!!!')
 
-    # Creating a new instance of the Deck class
-    new_deck = Deck()
+                if len(player_one.all_cards) < 3:
+                    print('Player One unable to declare war')
+                    print('PLAYER TWO WINS')
+                    game_on = False
+                    break
+
+                elif len(player_two.all_cards) < 3:
+                    print('Player Two unable to declare war')
+                    print('PLAYER ONE WINS')
+                    game_on = False
+                    break
+                else:
+                    for num in range(3):
+                        player_one_cards.append(player_one.remove_one())
+                        player_two_cards.append(player_two.remove_one())
+
+
+
 
 
 
@@ -114,7 +155,7 @@ if __name__ == "__main__":
 
     #
     new_deck.shuffle()
-    mycard = new_deck.deal_one()
+    mycard = new_deck.deal()
     print(mycard)
     print(new_deck.all_cards[0])
     new_player = Player("Jose")
