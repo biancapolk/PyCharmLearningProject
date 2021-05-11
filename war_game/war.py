@@ -1,4 +1,6 @@
 '''WAR.PY'''
+import unittest
+
 '''CARD'''
 '''SUIT, RANK, VALUE'''
 import random
@@ -135,11 +137,32 @@ def hit_or_stand(deck, hand):
             print("Sorry, please try again.")
             continue
         break
+
+class TestCap(unittest.TestCase):
+    def test_deck(self):
+        test_deck = Deck()
+        print(test_deck)
+
+    def test_player(self):
+
+        test_player = Hand()
+        for card in test_player.cards:
+            print(card)
+
+    def test_hand(self):
+        test_deck = Deck()
+        test_deck.shuffle()
+        test_player = Hand()
+        test_player.add_card(test_deck.deal())
+        test_player.add_card(test_deck.deal())
+        test_player.value
+
+
+
 # GAME SETUP
 
 if __name__ == "__main__":
     test_deck = Deck()
-    test_deck.shuffle()
     test_player = Hand()
     test_player.add_card(test_deck.deal())
     test_player.add_card(test_deck.deal())
