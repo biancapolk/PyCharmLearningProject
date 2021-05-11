@@ -1,9 +1,8 @@
 '''WAR.PY'''
 import unittest
 
-'''CARD'''
-'''SUIT, RANK, VALUE'''
 import random
+
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = {'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
          'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace'}
@@ -11,6 +10,8 @@ values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7,
           'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
 playing = True
 '''Card Class'''
+
+
 class Card():
     def __init__(self, suit, rank):
         self.suit = suit
@@ -20,9 +21,12 @@ class Card():
     def __str__(self):
         return self.rank + " of " + self.suit
 
+
 '''
 Deck Class
 '''
+
+
 class Deck:
     def __init__(self):
         self.deck = []  # start with an empty list
@@ -47,6 +51,8 @@ class Deck:
 '''
 Player Class
 '''
+
+
 class Player:
     def __init__(self, name):
         self.name = name
@@ -66,9 +72,12 @@ class Player:
     def __str__(self):
         return f'Player {self.name} has {len(self.all_cards)} cards.'
 
+
 '''
 Hand Class
 '''
+
+
 class Hand:
 
     def __init__(self):
@@ -86,9 +95,13 @@ class Hand:
         while self.value > 21 and self.aces:
             self.value -= 10
             self.aces -= 1
+
+
 '''
 Chips Class
 '''
+
+
 class Chips:
 
     def __init__(self):
@@ -106,7 +119,7 @@ def take_bet(chips):
     while True:
         try:
             chips.bet = int(input('How many chips would you like to bet? '))
-        except ValueError:
+        except:
             print('Sorry, a bet must be an integer!')
         else:
             if chips.bet > chips.total:
@@ -114,8 +127,8 @@ def take_bet(chips):
             else:
                 break
 
-def hit(deck, hand):
 
+def hit(deck, hand):
     hand.add_card(deck.deal())
     hand.adjust_for_ace()
 
@@ -188,8 +201,11 @@ class TestCap(unittest.TestCase):
         test_player.add_card(test_deck.deal())
         test_player.add_card(test_deck.deal())
         test_player.value
-        for card in test_player.cards:
-            print(card)
+        try:
+            for card in test_player.cards:
+                print(card)
+        except:
+            print("Sorry, no cards availiable")
 
     def test_hand(self):
         test_deck = Deck()
@@ -198,8 +214,6 @@ class TestCap(unittest.TestCase):
         test_player.add_card(test_deck.deal())
         test_player.add_card(test_deck.deal())
         test_player.value
-
-
 
 
 if __name__ == "__main__":
