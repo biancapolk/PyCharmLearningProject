@@ -40,11 +40,13 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.all_cards = []
+
     def remove_one(self):
         pass
+
     def add_cards(self, new_cards):
         if type(new_cards) == type([]):
-            # List of multiple card objects
+            # List Sof multiple card objects
             self.all_cards.extend(new_cards)
         else:
             # For a single card object
@@ -53,9 +55,44 @@ class Player:
     def __str__(self):
         return f'Player {self.name} has {len(self.all_cards)} cards.'
 
+# CONSIDER TABLE CLASS VS PLAYER CLASS
+# GAME SETUP
+
 if __name__ == "__main__":
+    player_one.add_card(new_deck.deal_one())
+    player_two.add_card(new_deck.deal_one())
+
+    game_on = True
+
+    round_num = 0
+
+    while game_on:
+        round_num += 1
+        print(f"Round {round_num}")
+        if len(player_one.all_cards) == 0:
+            print('Player One, out of cards! Player Two Wins!')
+            game_on = False
+            break
+        if len(player_two.all_cards) == 0:
+            print('Player One, out of cards! Player Two Wins!')
+            game_on = False
+            break
+        # START A NEW ROUND
+        player_one_cards = []
+        player_one_cards.append(player_one.remove_one())
+
+        player_two_cards = []
+        player_two_cards.append(player_two.remove_one())
+
+        # while at_war
+
     # Creating a new instance of the Deck class
     new_deck = Deck()
+
+
+
+
+
     # first_card = new_deck.all_cards[-1]
     # print(first_card)
 
@@ -82,3 +119,4 @@ if __name__ == "__main__":
     print(new_deck.all_cards[0])
     new_player = Player("Jose")
     print(new_player)
+    new_player.add_cards()
