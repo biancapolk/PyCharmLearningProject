@@ -29,6 +29,6 @@ print(d['Incorrect!']) # now using an incorrect value and the default value retu
 """Named Tuples"""
 mytuple = (10,20,30)
 from collections import namedtuple
-Dog = namedtuple('Dog', ['age','breed','name']) # constructing a named tuple it is like created a new object in OOP- it is a named index for the value in the format : namedtuple(type name, field name(s))
+Dog = namedtuple('Dog', ['age','breed','name']) # constructing a named tuple it is like created a new object in OOP- it is a named index for the value versus using the index in the format : namedtuple(type name, field name(s))
 nea = Dog(age=10, breed='dauchund', name='Nea Polk')
-print(nea)
+print(nea.breed)
