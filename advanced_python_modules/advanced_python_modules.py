@@ -18,9 +18,17 @@ print(d['b'])
 
 d = defaultdict(lambda: 0)
 
-# creating and calling a correct key
-d['correct'] = 100
+d['correct'] = 100 # creating and calling a correct key
+
 print(d['correct'])
 
-# now using an incorrect value and the default value returns to zero
-print(d['Incorrect!'])
+print(d['Incorrect!']) # now using an incorrect value and the default value returns to zero
+
+'''------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'''
+"""Named Tuples"""
+mytuple = (10,20,30)
+from collections import namedtuple
+Dog = namedtuple('Dog', ['age','breed','name']) # constructing a named tuple it is like created a new object in OOP- it is a named index for the value in the format : namedtuple(type name, field name(s))
+nea = Dog(age=10, breed='dauchund', name='Nea Polk')
+print(nea)
