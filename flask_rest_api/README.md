@@ -100,6 +100,12 @@
         def identity(payload):
             user_id = payload['identity']
             return userid_table.get(user_id, None)
+
+        # Allows us to map a user by its username
+        username_mapping = {u.username: u for u in users}
+        # Allows us to map a user by its user_id
+        userid_mapping = {u.id: u for u in users}
+
     ------------------------------------------------------------------------------------------------------------------------
 
 # Authentication
