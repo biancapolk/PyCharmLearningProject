@@ -111,3 +111,14 @@
 # Authentication
     
 
+# DELETE
+
+    Q: 
+        # Is there a better way to do this
+        global items
+        item = list(filter(lambda x: x['name'] != name, items))
+# PUT to create or update items
+
+        Section 75
+        Section 76
+# Optimizing our final code and request parsing
