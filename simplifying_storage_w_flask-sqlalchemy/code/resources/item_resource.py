@@ -11,6 +11,11 @@ class Item(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
+    parser.add_argument('store_id',
+                        type=int,
+                        required=True,
+                        help="Every item needs a store id!"
+                        )
 
     @jwt_required()
     def get(self, name):
@@ -58,7 +63,7 @@ class Item(Resource):
                 return {"message": "An error occurred inserting the item."}
         else:
             try:
-                item.price = data['price']
+                item.price = data['price']  # should I add store id?
             except:
                 return {"message": "An error occurred updating the item."}
 
