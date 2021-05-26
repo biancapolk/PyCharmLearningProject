@@ -1,4 +1,3 @@
-import sqlite3
 from db import db
 
 
@@ -21,9 +20,8 @@ class ItemModel(db.Model):
 
     @classmethod
     def find_by_name(cls, name):
-        return ItemModel.query.filter_by(name=name).first  # This translates to some SQL code: SELECT * FROM items WHERE name=name LIMIT 1
+        return cls.query.filter_by(name=name).first()  # This translates to some SQL code: SELECT * FROM items WHERE name=name LIMIT 1
 
-    @classmethod
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
