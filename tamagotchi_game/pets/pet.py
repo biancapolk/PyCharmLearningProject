@@ -1,4 +1,11 @@
+"""A Tamagotchi Game"""
+from collections import namedtuple
 from random import randrange
+
+
+class Dog:
+    pass
+
 
 class Pet:
     # Class object attribute
@@ -9,6 +16,11 @@ class Pet:
     hunger_threshold = 10
     sounds = ['Mrrp']
     state = ""
+
+
+    # Frog = namedtuple('Frog', ['age', 'type', 'name'])
+    # Cat = namedtuple('Cat', ['age', 'breed', 'name'])
+    # Dog = namedtuple('Dog', ['age', 'breed', 'name'])
 
     # Method called upon when creating an instance of a class
     def __init__(self, name, type, age):
@@ -23,6 +35,9 @@ class Pet:
         self.hunger = randrange(self.hunger_threshold)
         self.boredom = randrange(self.boredom_threshold)
         self.sounds = self.sounds[:]  # copy the class attribute, so that when we make changes to it, we won't affect the other Pets in the class
+        self.sounds = self.sounds[
+                      :]  # copy the class attribute, so that when we make changes to it, we won't affect the other Pets in the class
+
 
     # STATE
     def clock_tick(self):
@@ -59,3 +74,39 @@ class Pet:
 
     def reduce_boredom(self):
         self.boredom = max(0, self.boredom - self.boredom_decrement)
+
+    def wake(self):
+        pass
+
+    def reduce_boredom(self):
+        self.boredom = max(0, self.boredom - self.boredom_decrement)
+
+class Dog(Pet):
+    sounds = ['Woof']
+
+    def speak(self):
+        print(self.sounds)
+
+    def who_am_i(self):
+        print("I am a dog!")
+
+
+class Cat(Pet):
+    sounds = ['Meow']
+
+    def speak(self):
+        print(self.sounds)
+
+    def who_am_i(self):
+        print("I am a cat!")
+
+
+if __name__ == "__main__":
+    nea = Dog(name="Nea", type="dog", age=8)
+    roxie = Cat(name="Roxie", type="dog", age=8)
+    # pig = Pig()
+    roxie.speak()
+    # nea.reduce_boredom()
+    # pet = Pet(name = "Nea", type= "dog", age=8)
+    # dog.hi()
+    # roxie.speak()
